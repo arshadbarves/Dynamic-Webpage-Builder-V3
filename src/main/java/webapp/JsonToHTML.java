@@ -13,6 +13,7 @@ import com.hp.gagawa.java.elements.Input;
 import com.hp.gagawa.java.elements.Label;
 import com.hp.gagawa.java.elements.Option;
 import com.hp.gagawa.java.elements.Select;
+import com.hp.gagawa.java.elements.Span;
 import com.hp.gagawa.java.elements.Text;
 
 public class JsonToHTML {
@@ -108,7 +109,7 @@ public class JsonToHTML {
 		String ComponentType = attributeDetail.get("ComponentType").toString().toLowerCase();
 		
 		Div div = new Div();
-		div.setCSSClass("form-group row").setStyle("margin: 10px;");
+		div.setCSSClass("form-group row").setStyle("margin: 20px;");
 		
 		Button button = new Button();
 		button.setType(ComponentType);
@@ -178,12 +179,21 @@ public class JsonToHTML {
 		if (IsDisabled == "true") {
 			text.setStyle("display: none;");
 		}
-		div.appendChild(new Div()
-				.appendChild(
-						new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
-								.setStyle("width:50"),
-						new Div().appendText("*").setCSSClass("form-text").setStyle("color:red;width:50"))
-				.setStyle("display:flex;").setCSSClass("col-sm-8"));
+		if (IsRequired.equals("Y")) {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).appendText("<span class=\"form-text\"\r\n"
+									+ "													style=\"color:red;width:50\">*</span>").setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		else {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		
+		
 		mainDiv.appendChild(div);
 	}
 
@@ -216,12 +226,20 @@ public class JsonToHTML {
 		input.setMaxlength(MaxLength);
 		div.appendChild(input);
 
-		div.appendChild(new Div()
-				.appendChild(
-						new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
-								.setStyle("width:50"),
-						new Div().appendText("*").setCSSClass("form-text").setStyle("color:red;width:50"))
-				.setStyle("display:flex;").setCSSClass("col-sm-4"));
+		if (IsRequired.equals("Y")) {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).appendText("<span class=\"form-text\"\r\n"
+									+ "													style=\"color:red;width:50\">*</span>").setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		else {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		
 		mainDiv.appendChild(div);
 	}
 
@@ -242,13 +260,21 @@ public class JsonToHTML {
 
 		Div div = new Div();
 		div.setCSSClass("form-group row").setStyle("margin: 10px;");
-		div.appendChild(new Div()
-				.appendChild(
-						new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
-								.setStyle("width:50"),
-						new Div().appendText("*").setCSSClass("form-text").setStyle("color:red;width:50"))
-				.setStyle("display:flex;").setCSSClass("col-sm-4"));
-
+		
+		if (IsRequired.equals("Y")) {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).appendText("<span class=\"form-text\"\r\n"
+									+ "													style=\"color:red;width:50\">*</span>").setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		else {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		
 		Div inputDiv = new Div();
 		inputDiv.setCSSClass("col-sm-8");
 		div.appendChild(inputDiv);
@@ -285,13 +311,21 @@ public class JsonToHTML {
 		Div div = new Div();
 		div.setCSSClass("form-group row").setStyle("margin: 10px;");
 		div.setStyle("display: none;");
-		div.appendChild(new Div()
-				.appendChild(
-						new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
-								.setStyle("width:50"),
-						new Div().appendText("*").setCSSClass("form-text").setStyle("color:red;width:50"))
-				.setStyle("display:flex;").setCSSClass("col-sm-4"));
-
+		
+		if (IsRequired.equals("Y")) {
+			
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).appendText("<span class=\"form-text\"\r\n"
+									+ "													style=\"color:red;width:50\">*</span>").setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		else {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
 		Div inputDiv = new Div();
 		inputDiv.setCSSClass("col-sm-8");
 		div.appendChild(inputDiv);
@@ -307,7 +341,6 @@ public class JsonToHTML {
 		}
 		input.setMaxlength(MaxLength);
 		inputDiv.appendChild(input);
-		inputDiv.appendChild(new Div().appendText("*").setCSSClass("form-text").setStyle("color:red"));
 		mainDiv.appendChild(div);
 	}
 
@@ -322,17 +355,25 @@ public class JsonToHTML {
 		String StyleClass = attributeDetail.get("StyleClass").toString();
 		String ComponentLabel = attributeDetail.get("ComponentLabel").toString();
 		String IsDisabled = attributeDetail.get("IsDisabled").toString();
-		String IsRequired = attributeDetail.get("IsRequired").toString().toUpperCase();
+		String IsRequired = attributeDetail.get("IsRequired").toString();
 		String RequiredMessage = attributeDetail.get("RequiredMessage").toString();
 
 		Div div = new Div();
 		div.setCSSClass("form-group row").setStyle("margin: 10px;");
-		div.appendChild(new Div()
-				.appendChild(
-						new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
-								.setStyle("width:50"),
-						new Div().appendText("*").setCSSClass("form-text").setStyle("color:red;width:50"))
-				.setStyle("display:flex;").setCSSClass("col-sm-4"));
+		System.out.println(IsRequired);
+		if (IsRequired.equals("Y")) {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).appendText("<span class=\"form-text\"\r\n"
+									+ "													style=\"color:red;width:50\">*</span>").setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
+		else {
+			div.appendChild(new Div()
+					.appendChild(
+							new Label().appendText(ComponentLabel).setCSSClass("form-check-label").setFor(ComponentId)
+									.setStyle("width:50")).setCSSClass("col-sm-4"));
+		}
 
 		Div inputDiv = new Div();
 		inputDiv.setCSSClass("col-sm-8");
@@ -341,7 +382,6 @@ public class JsonToHTML {
 		Select select = new Select();
 		select.setCSSClass("form-select");
 		select.setName(AttributeName);
-		select.setSize(Size);
 		select.setId(ComponentId);
 		if (IsDisabled == "true") {
 			select.setDisabled("disabled");

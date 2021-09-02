@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>WebApp</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="assets/css/w3.css" />
+	<link rel="stylesheet" href="assets/css/w3-theme-blue-grey.css" />
+
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Open+Sans" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<style>
+html, body, h1, h2, h3, h4, h5 {
+	font-family: "Open Sans", sans-serif;
+}
+</style>
+</h:head>
+<h:body class="w3-theme-l5">
+	<!-- Navbar -->
+	<div class="w3-top">
+		<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+			<a
+				class="
+            w3-bar-item
+            w3-button
+            w3-hide-medium
+            w3-hide-large
+            w3-right
+            w3-padding-large
+            w3-hover-white
+            w3-large
+            w3-theme-d2
+          "
+				href="javascript:void(0);" onclick="openNav()"><i
+				class="fa fa-bars"></i></a> <a href="#"
+				class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><img
+				src="assets/images/logo.png" alt="Solartis" height="25" width="100" /></a>
+			<a href="#"
+				class="
+            w3-bar-item
+            w3-button
+            w3-hide-small
+            w3-right
+            w3-padding-large
+            w3-hover-white
+          "
+				title="My Account"> <img src="assets/images/avatar2.png"
+				class="w3-circle" style="height: 23px; width: 23px" alt="Avatar" />
+			</a>
+		</div>
+	</div>
+
+	<!-- Navbar on small screens -->
+	<div id="navDemo"
+		class="
+        w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large
+      ">
+		<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+		<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+		<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+		<a href="#" class="w3-bar-item w3-button w3-padding-large">My
+			Profile</a>
+	</div>
+
+	<!-- Page Container -->
+	<div class="w3-container w3-content"
+		style="max-width: 1400px; margin-top: 80px">
+		<!-- The Grid -->
+		<div class="w3-row">
+			<!-- Left Column -->
+			<div class="w3-col m4">
+				<!-- Profile -->
+				<p:card>
+					<f:facet name="title">Select JSON File</f:facet>
+
+					<div class="card">
+
+						<p:growl id="messages" showDetail="true" />
+
+						<h:form enctype="multipart/form-data">
+							<p:fileUpload value="#{renderRaw.file}" mode="simple"
+								skinSimple="true" allowTypes="/(\.|\/)(json)$/" />
+							<div class="render-button-area">
+								<p:commandButton value="Render" ajax="false"
+									action="#{renderRaw.upload}" styleClass="ui-button-secondary" />
+							</div>
+						</h:form>
+					</div>
+
+				</p:card>
+				<br />
+
+				<!-- End Left Column -->
+			</div>
+
+			<!-- Middle Column -->
+			<div class="w3-col m8">
+				<div class="w3-row-padding">
+					<div class="w3-col m12">
+
+						<p:card>
+							<f:facet name="title">Render HTML Page</f:facet>
+
+							<p:tabView>
+								<p:tab title="From Raw Input">
+									<h:form>
+										<p:inputTextarea rows="10" placeholder="Enter JSON Data"
+											value="#{renderRaw.jsonTextData}" style="width:100%"
+											autoResize="false" />
+										<div class="render-button-area">
+											<p:commandButton type="submit" value="Render"
+												styleClass="ui-button-secondary"
+												action="#{renderRaw.renderHtml}" />
+										</div>
+									</h:form>
+								</p:tab>
+								<p:tab title="From API">
+									<span class="ui-input-icon-left"> <i class="pi pi-link" />
+										<p:inputText style="width:100%" placeholder="Enter API Link" />
+									</span>
+									<div class="render-button-area">
+										<p:commandButton type="button" value="Render"
+											styleClass="ui-button-secondary" />
+									</div>
+								</p:tab>
+							</p:tabView>
+
+						</p:card>
+					</div>
+				</div>
+
+
+				<!-- End Middle Column -->
+			</div>
+
+			<!-- End Grid -->
+		</div>
+
+		<!-- End Page Container -->
+	</div>
+	<br />
+
+	<!-- Footer -->
+
+	<footer class="w3-container w3-theme-d5">
+	<p>
+		© 2021 <a href="https://www.solartis.com/" target="_blank">Solartis.</a>
+		All Rights Reserved.
+	</p>
+	</footer>
+
+	<script>
+		// Accordion
+		function myFunction(id) {
+			var x = document.getElementById(id);
+			if (x.className.indexOf("w3-show") == -1) {
+				x.className += " w3-show";
+				x.previousElementSibling.className += " w3-theme-d1";
+			} else {
+				x.className = x.className.replace("w3-show", "");
+				x.previousElementSibling.className = x.previousElementSibling.className
+						.replace(" w3-theme-d1", "");
+			}
+		}
+
+		// Used to toggle the menu on smaller screens when clicking on the menu button
+		function openNav() {
+			var x = document.getElementById("navDemo");
+			if (x.className.indexOf("w3-show") == -1) {
+				x.className += " w3-show";
+			} else {
+				x.className = x.className.replace(" w3-show", "");
+			}
+		}
+	</script>
+</h:body>
+
+</html>
